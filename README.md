@@ -1,6 +1,6 @@
-# Feishu Skills for Claude Code
+# Feishu Skills
 
-> 在 Claude Code 对话中用自然语言操作飞书，无需切换窗口，无需记忆 API。
+> 在 AI Coding Agent 对话中用自然语言操作飞书，无需切换窗口，无需记忆 API。
 
 8 modules · 20 tools · OAuth 用户身份
 
@@ -15,7 +15,7 @@
 | **可靠性** | 无常驻进程，不会崩溃或断连；每个 tool.py 可独立运行调试 | 进程挂了所有工具不可用，调试需通过 MCP 协议 |
 | **部署** | `git clone` 即用，Python + `requests`（1 个包） | 需要启动独立进程，配置 `mcp.json`，依赖链更长 |
 
-**总结**：MCP 适合需要标准化协议对接多个 AI 客户端的场景。如果你只用 Claude Code，Skills 上下文更省、扩展更灵活、运行更可靠。
+**总结**：MCP 适合需要标准化协议对接多个 AI 客户端的场景。如果你使用支持 Skills 机制的 AI Coding Agent（如 Claude Code），Skills 上下文更省、扩展更灵活、运行更可靠。
 
 ## Features
 
