@@ -35,9 +35,9 @@
 将本仓库克隆到项目 Skills 目录（以 Claude Code 为例，其他 Agent 请参考对应文档）：
 
 ```bash
-git clone https://github.com/WWHLilith/feishu-skills.git <skills-dir>/feishu
+git clone https://github.com/WenHaoWang1997/feishu-skills.git <skills-dir>/feishu
 # Claude Code 示例：
-git clone https://github.com/WWHLilith/feishu-skills.git .claude/skills/feishu
+git clone https://github.com/WenHaoWang1997/feishu-skills.git .claude/skills/feishu
 ```
 
 ### 2. 配置环境
