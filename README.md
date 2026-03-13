@@ -58,9 +58,19 @@ python --version
 pip install -r <skills-dir>/feishu/requirements.txt
 ```
 
-### 3. 配置飞书凭证
+### 3. 配置飞书应用
 
-复制 `.env.example` 为 `.env`，填入飞书应用凭证：
+在 [飞书开放平台](https://open.feishu.cn/app) 完成以下配置：
+
+1. **获取凭证**：创建应用（或使用已有应用），记下 App ID 和 App Secret
+2. **开通权限**：在「权限管理」中开通所需的 scope（见下方 [Required Scopes](#required-scopes)）
+3. **配置 OAuth 回调**：在「安全设置」→「重定向 URL」中添加：
+   ```
+   http://localhost:19897/callback
+   ```
+   > ⚠️ 不配置此项会导致 OAuth 授权失败，无法获取 user_access_token
+
+然后复制 `.env.example` 为 `.env`，填入凭证：
 
 ```bash
 cp <skills-dir>/feishu/.env.example <skills-dir>/feishu/.env
@@ -70,8 +80,6 @@ cp <skills-dir>/feishu/.env.example <skills-dir>/feishu/.env
 FEISHU_APP_ID=your_app_id
 FEISHU_APP_SECRET=your_app_secret
 ```
-
-凭证在 [飞书开放平台](https://open.feishu.cn/app) 创建应用后获取。
 
 ### 4. 首次授权
 
