@@ -10,8 +10,11 @@ sys.path.insert(0, str(_FEISHU_ROOT))
 from scripts.api import api_request
 
 
-def send_message(receive_id: str, receive_id_type: str, text: str = "", rich: str = "") -> str:
-    if rich:
+def send_message(receive_id: str, receive_id_type: str, text: str = "", rich: str = "", card: str = "") -> str:
+    if card:
+        msg_type = "interactive"
+        content = card
+    elif rich:
         msg_type = "post"
         content = rich
     else:
@@ -36,9 +39,10 @@ if __name__ == "__main__":
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--text", help="纯文本消息")
     group.add_argument("--rich", help="富文本 JSON")
+    group.add_argument("--card", help="卡片消息 JSON")
     args = parser.parse_args()
     try:
-        print(send_message(args.to, args.type, text=args.text or "", rich=args.rich or ""))
+        print(send_message(args.to, args.type, text=args.text or "", rich=args.rich or "", card=args.card or ""))
     except Exception as e:
         print(f"[error] {e}", file=sys.stderr)
         sys.exit(1)

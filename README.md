@@ -2,7 +2,7 @@
 
 > 在 AI Coding Agent 对话中用自然语言操作飞书，无需切换窗口，无需记忆 API。
 
-7 modules · 18 tools · OAuth 用户身份
+8 modules · 23 tools · OAuth 用户身份
 
 ## Why Skills, Not MCP?
 
@@ -26,6 +26,7 @@
 - **👤 通讯录 contacts** — 按姓名搜索用户，获取用户详情
 - **📋 多维表格 bitable** — 查询、新增、更新多维表格记录
 - **📅 日历 calendar** — 创建日程，查询日程列表
+- **🎨 画板 board** — 查看/创建/更新/删除节点，导入 PlantUML/Mermaid 图表
 
 
 ## Quick Start
@@ -117,6 +118,10 @@ FEISHU_APP_SECRET=your_app_secret
 | 通讯录查询 | `contact:user.base:readonly`、`contact:user.id:readonly` | — | tenant |
 | 通讯录搜索 | `contact:user:search` | `contact:user:search` | user |
 | 日历 | `calendar:calendar` | `calendar:calendar` | user |
+| 画板读取 | `board:whiteboard:node:read` | `board:whiteboard:node:read` | user |
+| 画板创建 | `board:whiteboard:node:create` | `board:whiteboard:node:create` | user |
+| 画板更新 | `board:whiteboard:node:update` | `board:whiteboard:node:update` | user |
+| 画板删除 | `board:whiteboard:node:delete` | `board:whiteboard:node:delete` | user |
 
 
 - **user**：通过 OAuth 以用户身份操作，scope 按需自动请求
@@ -137,6 +142,7 @@ feishu/
 ├── contacts/             # search & get
 ├── bitable/              # query / create / update
 ├── calendar/             # create-event / list-events
+├── board/                # list-nodes / create-nodes / update-nodes / delete-nodes / plantuml
 ├── setup.bat             # Windows 一键安装脚本
 ├── requirements.txt      # Python 依赖
 └── .env.example          # 凭证配置模板

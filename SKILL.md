@@ -17,6 +17,7 @@ alwaysApply: false
 | 知识库 | `wiki/` | 搜索、阅读知识库页面 |
 | 多维表格 | `bitable/` | 多维表格记录增删改查 |
 | 日历 | `calendar/` | 创建/查询日程 |
+| 画板 | `board/` | 查看/创建/更新/删除节点、导入 PlantUML/Mermaid |
 
 ## 快速部署
 
@@ -75,6 +76,7 @@ FEISHU_APP_SECRET=your_app_secret
 | 消息发送 | `im:message`、`im:message:send_as_bot` |
 | 通讯录 | `contact:user.base:readonly`、`contact:user.id:readonly` |
 | 日历 | `calendar:calendar`、`calendar:calendar:readonly` |
+| 画板 | `board:whiteboard:node:read`、`board:whiteboard:node:create`、`board:whiteboard:node:update`、`board:whiteboard:node:delete` |
 
 ### OAuth 用户权限（user_access_token，在"安全设置"添加重定向 URL）
 
