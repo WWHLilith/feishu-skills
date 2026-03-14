@@ -26,7 +26,12 @@ def api_request(method: str, path: str, body: dict = None, params: dict = None,
         method, f"{FEISHU_BASE_URL}{path}",
         headers=headers, json=body, params=params, timeout=15,
     )
-    data = resp.json()
+    try:
+        data = resp.json()
+    except (ValueError, requests.exceptions.JSONDecodeError):
+        if resp.ok:
+            return {"code": 0, "msg": "ok"}
+        raise RuntimeError(f"[飞书API错误] HTTP {resp.status_code}: {resp.text[:200]}")
     if data.get("code", 0) != 0:
         raise RuntimeError(f"[飞书API错误] code={data['code']}, msg={data.get('msg', '')}")
     return data
