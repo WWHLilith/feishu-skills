@@ -16,12 +16,15 @@ def _to_timestamp(dt_str: str) -> str:
 
 
 def create_event(summary: str, start: str, end: str, description: str = "", attendees: str = "") -> str:
-    # 获取主日历 ID
-    cal_resp = api_request("GET", "/calendar/v4/calendars/primary")
-    calendar_id = cal_resp.get("data", {}).get("calendars", [{}])[0].get("calendar", {}).get("calendar_id", "")
+    # 获取主日历（从日历列表中找 type=primary）
+    cal_resp = api_request("GET", "/calendar/v4/calendars")
+    calendar_id = ""
+    for cal in cal_resp.get("data", {}).get("calendar_list", []):
+        if cal.get("type") == "primary":
+            calendar_id = cal["calendar_id"]
+            break
     if not calendar_id:
-        # 尝试另一种响应格式
-        calendar_id = cal_resp.get("data", {}).get("calendar", {}).get("calendar_id", "primary")
+        return "[error] 未找到主日历"
 
     body = {
         "summary": summary,

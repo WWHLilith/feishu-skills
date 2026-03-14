@@ -20,9 +20,15 @@ def list_events(start_date: str = "", end_date: str = "") -> str:
     start_ts = str(int(datetime.strptime(start_date, "%Y-%m-%d").timestamp()))
     end_ts = str(int(datetime.strptime(end_date, "%Y-%m-%d").timestamp()))
 
-    # 获取主日历
-    cal_resp = api_request("GET", "/calendar/v4/calendars/primary")
-    calendar_id = cal_resp.get("data", {}).get("calendar", {}).get("calendar_id", "primary")
+    # 获取主日历（从日历列表中找 type=primary）
+    cal_resp = api_request("GET", "/calendar/v4/calendars")
+    calendar_id = ""
+    for cal in cal_resp.get("data", {}).get("calendar_list", []):
+        if cal.get("type") == "primary":
+            calendar_id = cal["calendar_id"]
+            break
+    if not calendar_id:
+        return "[error] 未找到主日历"
 
     data = api_request("GET", f"/calendar/v4/calendars/{calendar_id}/events", params={
         "start_time": start_ts,

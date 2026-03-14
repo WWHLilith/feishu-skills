@@ -141,7 +141,7 @@ def _do_oauth_login() -> dict:
         f"https://open.feishu.cn/open-apis/authen/v1/authorize"
         f"?app_id={FEISHU_APP_ID}"
         f"&redirect_uri={_REDIRECT_URI}"
-        f"&scope=docs:doc drive:drive wiki:wiki docx:document"
+        f"&scope=docs:doc drive:drive wiki:wiki docx:document sheets:spreadsheet bitable:app contact:user.base:readonly contact:user.id:readonly contact:contact.base:readonly calendar:calendar calendar:calendar:readonly"
     )
 
     print(f"正在打开浏览器进行飞书登录...")

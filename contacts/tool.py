@@ -10,6 +10,7 @@ from scripts.api import api_request
 
 
 def search_user(query: str) -> str:
+    # /search/v1/user 仅支持 user_access_token
     data = api_request("POST", "/search/v1/user", params={"query": query, "page_size": 10},
                        body={"query": query}, use_user_token=True)
     users = data.get("data", {}).get("users", [])
@@ -25,9 +26,10 @@ def search_user(query: str) -> str:
 
 
 def get_user(user_id: str) -> str:
+    # /contact/v3/users 支持 tenant_access_token
     data = api_request("GET", f"/contact/v3/users/{user_id}", params={
         "user_id_type": "open_id"
-    })
+    }, use_user_token=False)
     u = data.get("data", {}).get("user", {})
     if not u:
         return f"[error] 未找到用户: {user_id}"
@@ -40,9 +42,10 @@ def get_user(user_id: str) -> str:
 
 
 def get_user_by_email(email: str) -> str:
+    # /contact/v3/users/batch_get_id 仅支持 tenant_access_token
     data = api_request("POST", "/contact/v3/users/batch_get_id", body={
         "emails": [email],
-    }, params={"user_id_type": "open_id"})
+    }, params={"user_id_type": "open_id"}, use_user_token=False)
     users = data.get("data", {}).get("user_list", [])
     if not users or not users[0].get("user_id"):
         return f"未找到邮箱 {email} 对应的用户。"
