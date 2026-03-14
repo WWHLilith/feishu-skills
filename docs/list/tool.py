@@ -29,9 +29,9 @@ def list_folder(folder_token: str = "", count: int = 20) -> str:
     path = f"/drive/v1/files"
     if folder_token:
         path = f"/drive/v1/files?folder_token={folder_token}&page_size={count}"
-        data = api_request("GET", path)
+        data = api_request("GET", path, scopes=["drive:drive"])
     else:
-        data = api_request("GET", "/drive/v1/files", params={"page_size": count})
+        data = api_request("GET", "/drive/v1/files", params={"page_size": count}, scopes=["drive:drive"])
 
     files = data.get("data", {}).get("files", [])
     if not files:

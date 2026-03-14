@@ -10,9 +10,9 @@ from scripts.api import api_request
 
 
 def search_user(query: str) -> str:
-    # /search/v1/user 仅支持 user_access_token
-    data = api_request("POST", "/search/v1/user", params={"query": query, "page_size": 10},
-                       body={"query": query}, use_user_token=True)
+    # /search/v1/user 仅支持 user_access_token，GET 方法
+    data = api_request("GET", "/search/v1/user", params={"query": query, "page_size": 10},
+                       use_user_token=True, scopes=["contact:user:search"])
     users = data.get("data", {}).get("users", [])
     if not users:
         return f"未找到匹配 \"{query}\" 的用户。"

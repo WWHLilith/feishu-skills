@@ -15,7 +15,7 @@ def search_wiki(query: str, space_id: str = "", count: int = 10) -> str:
         spaces = [{"space_id": space_id, "name": ""}]
     else:
         resp = api_request("GET", "/wiki/v2/spaces", params={"page_size": 50},
-                           use_user_token=True)
+                           use_user_token=True, scopes=["wiki:wiki"])
         spaces = resp.get("data", {}).get("items", [])
         if not spaces:
             return "未找到任何知识空间。"
@@ -31,7 +31,7 @@ def search_wiki(query: str, space_id: str = "", count: int = 10) -> str:
                 params["page_token"] = page_token
             try:
                 resp = api_request("GET", f"/wiki/v2/spaces/{sid}/nodes", params=params,
-                                   use_user_token=True)
+                                   use_user_token=True, scopes=["wiki:wiki"])
             except Exception:
                 break
             nodes = resp.get("data", {}).get("items", [])
@@ -65,7 +65,7 @@ def browse_node(parent_token: str) -> str:
     # 先获取父节点信息
     try:
         parent = api_request("GET", "/wiki/v2/spaces/get_node", params={"token": parent_token},
-                             use_user_token=True)
+                             use_user_token=True, scopes=["wiki:wiki"])
         parent_data = parent.get("data", {}).get("node", {})
         space_id = parent_data.get("space_id", "")
         parent_title = parent_data.get("title", parent_token)
@@ -77,7 +77,7 @@ def browse_node(parent_token: str) -> str:
     params = {"page_size": 50, "parent_node_token": parent_token}
     try:
         resp = api_request("GET", f"/wiki/v2/spaces/{space_id}/nodes", params=params,
-                           use_user_token=True)
+                           use_user_token=True, scopes=["wiki:wiki"])
     except Exception as e:
         return f"[error] {e}"
 
@@ -96,7 +96,7 @@ def browse_node(parent_token: str) -> str:
 
 def list_spaces() -> str:
     resp = api_request("GET", "/wiki/v2/spaces", params={"page_size": 50},
-                       use_user_token=True)
+                       use_user_token=True, scopes=["wiki:wiki"])
     spaces = resp.get("data", {}).get("items", [])
     if not spaces:
         return "未找到任何知识空间。"

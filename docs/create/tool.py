@@ -15,7 +15,7 @@ def create_document(title: str, folder_token: str = "", content: str = "") -> st
         body["folder_token"] = folder_token
 
     # 使用 user_access_token 创建，文档归属当前用户
-    data = api_request("POST", "/docx/v1/documents", body=body, use_user_token=True)
+    data = api_request("POST", "/docx/v1/documents", body=body, use_user_token=True, scopes=["docx:document"])
     doc = data.get("data", {}).get("document", {})
     doc_id = doc.get("document_id", "")
     url = doc.get("url", "")
@@ -24,7 +24,7 @@ def create_document(title: str, folder_token: str = "", content: str = "") -> st
     if content and doc_id:
         try:
             blocks_data = api_request("GET", f"/docx/v1/documents/{doc_id}/blocks",
-                                      use_user_token=True)
+                                      use_user_token=True, scopes=["docx:document"])
             doc_block_id = blocks_data.get("data", {}).get("items", [{}])[0].get("block_id", doc_id)
 
             api_request("POST", f"/docx/v1/documents/{doc_id}/blocks/{doc_block_id}/children",
@@ -38,7 +38,7 @@ def create_document(title: str, folder_token: str = "", content: str = "") -> st
                         "style": {}
                     }
                 }]
-            }, use_user_token=True)
+            }, use_user_token=True, scopes=["docx:document"])
         except Exception:
             pass  # 内容追加失败不影响文档创建结果
 

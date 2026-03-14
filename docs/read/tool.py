@@ -37,7 +37,7 @@ def _extract_text(content: dict) -> str:
 
 
 def _resolve_wiki_token(wiki_token: str) -> tuple[str, str]:
-    node = api_request("GET", "/wiki/v2/spaces/get_node", params={"token": wiki_token})
+    node = api_request("GET", "/wiki/v2/spaces/get_node", params={"token": wiki_token}, scopes=["wiki:wiki"])
     node_data = node.get("data", {}).get("node", {})
     return node_data.get("obj_token", ""), node_data.get("title", "N/A")
 
@@ -66,15 +66,15 @@ def read_document(doc_id: str = "", wiki_token: str = "", url: str = "") -> str:
     if not doc_id:
         return "[error] 需要提供 --doc-id、--wiki-token 或 --url 参数"
 
-    meta = api_request("GET", f"/docx/v1/documents/{doc_id}")
+    meta = api_request("GET", f"/docx/v1/documents/{doc_id}", scopes=["docx:document"])
     title = meta.get("data", {}).get("document", {}).get("title", "N/A")
 
-    content = api_request("GET", f"/docx/v1/documents/{doc_id}/raw_content")
+    content = api_request("GET", f"/docx/v1/documents/{doc_id}/raw_content", scopes=["docx:document"])
     raw = content.get("data", {}).get("content", "")
     if raw:
         return f"标题: {title}\n---\n{raw}"
 
-    blocks = api_request("GET", f"/docx/v1/documents/{doc_id}/blocks")
+    blocks = api_request("GET", f"/docx/v1/documents/{doc_id}/blocks", scopes=["docx:document"])
     text = _extract_text(blocks.get("data", {}))
     return f"标题: {title}\n---\n{text if text else '(文档内容为空或无法解析)'}"
 

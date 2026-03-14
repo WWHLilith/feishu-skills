@@ -14,7 +14,7 @@ def create_sheet(title: str, folder_token: str = "") -> str:
     if folder_token:
         body["folder_token"] = folder_token
 
-    data = api_request("POST", "/sheets/v3/spreadsheets", body=body)
+    data = api_request("POST", "/sheets/v3/spreadsheets", body=body, scopes=["sheets:spreadsheet"])
     sheet = data.get("data", {}).get("spreadsheet", {})
     token = sheet.get("spreadsheet_token", "")
     url = sheet.get("url", "")

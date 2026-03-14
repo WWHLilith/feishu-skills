@@ -16,7 +16,7 @@ def write_sheet(token: str, range_str: str, values: list) -> str:
             "range": range_str,
             "values": values,
         }
-    })
+    }, scopes=["sheets:spreadsheet"])
     updated = data.get("data", {}).get("updatedCells", 0)
     return f"写入成功：范围 {range_str}，更新 {updated} 个单元格"
 

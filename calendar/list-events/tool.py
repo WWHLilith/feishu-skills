@@ -21,7 +21,7 @@ def list_events(start_date: str = "", end_date: str = "") -> str:
     end_ts = str(int(datetime.strptime(end_date, "%Y-%m-%d").timestamp()))
 
     # 获取主日历（从日历列表中找 type=primary）
-    cal_resp = api_request("GET", "/calendar/v4/calendars")
+    cal_resp = api_request("GET", "/calendar/v4/calendars", scopes=["calendar:calendar"])
     calendar_id = ""
     for cal in cal_resp.get("data", {}).get("calendar_list", []):
         if cal.get("type") == "primary":
@@ -34,7 +34,7 @@ def list_events(start_date: str = "", end_date: str = "") -> str:
         "start_time": start_ts,
         "end_time": end_ts,
         "page_size": 50,
-    })
+    }, scopes=["calendar:calendar"])
     events = data.get("data", {}).get("items", [])
     if not events:
         return f"{start_date} ~ {end_date} 没有日程。"

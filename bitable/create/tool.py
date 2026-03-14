@@ -13,7 +13,7 @@ from scripts.api import api_request
 def create_record(app_token: str, table_id: str, fields: dict) -> str:
     data = api_request("POST", f"/bitable/v1/apps/{app_token}/tables/{table_id}/records", body={
         "fields": fields,
-    })
+    }, scopes=["bitable:app"])
     record = data.get("data", {}).get("record", {})
     record_id = record.get("record_id", "")
     return f"记录创建成功 (record_id: {record_id})"

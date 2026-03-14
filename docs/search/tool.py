@@ -15,7 +15,7 @@ def search_docs(query: str, count: int = 10) -> str:
         data = api_request("POST", "/search/v1/suite/doc", body={
             "query": query,
             "page_size": count,
-        }, use_user_token=True)
+        }, use_user_token=True, scopes=["docs:doc"])
         items = data.get("data", {}).get("items", [])
         if items:
             lines = []
@@ -34,7 +34,7 @@ def search_docs(query: str, count: int = 10) -> str:
         "search_key": query,
         "count": count,
         "docs_types": [2, 8, 11, 12, 15, 16],
-    }, use_user_token=True)
+    }, use_user_token=True, scopes=["docs:doc"])
     items = data.get("data", {}).get("docs_entities", [])
     if not items:
         return "未找到匹配的文档。"

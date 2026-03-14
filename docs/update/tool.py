@@ -11,7 +11,7 @@ from scripts.api import api_request
 
 def update_document(doc_id: str, content: str) -> str:
     # 获取文档的 document block ID
-    blocks_data = api_request("GET", f"/docx/v1/documents/{doc_id}/blocks")
+    blocks_data = api_request("GET", f"/docx/v1/documents/{doc_id}/blocks", scopes=["docx:document"])
     items = blocks_data.get("data", {}).get("items", [])
     if not items:
         raise RuntimeError("无法获取文档 block 结构")
@@ -36,7 +36,7 @@ def update_document(doc_id: str, content: str) -> str:
 
     api_request("POST", f"/docx/v1/documents/{doc_id}/blocks/{doc_block_id}/children", body={
         "children": children,
-    })
+    }, scopes=["docx:document"])
 
     return f"文档更新成功\nID: {doc_id}\n追加内容长度: {len(content)} 字符"
 

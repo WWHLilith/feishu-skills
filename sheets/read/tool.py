@@ -18,7 +18,7 @@ def _parse_sheet_url(url: str) -> str:
 def read_sheet(token: str, range_str: str = "") -> str:
     # 如果没指定范围，先获取工作表列表
     if not range_str:
-        meta = api_request("GET", f"/sheets/v3/spreadsheets/{token}/sheets/query")
+        meta = api_request("GET", f"/sheets/v3/spreadsheets/{token}/sheets/query", scopes=["sheets:spreadsheet"])
         sheets = meta.get("data", {}).get("sheets", [])
         if not sheets:
             return "[error] 表格中没有工作表"
@@ -26,7 +26,7 @@ def read_sheet(token: str, range_str: str = "") -> str:
         title = sheets[0].get("title", "Sheet1")
         range_str = f"{sheet_id}"
 
-    data = api_request("GET", f"/sheets/v2/spreadsheets/{token}/values/{range_str}")
+    data = api_request("GET", f"/sheets/v2/spreadsheets/{token}/values/{range_str}", scopes=["sheets:spreadsheet"])
     values = data.get("data", {}).get("valueRange", {}).get("values", [])
 
     if not values:

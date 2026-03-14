@@ -17,7 +17,7 @@ def _to_timestamp(dt_str: str) -> str:
 
 def create_event(summary: str, start: str, end: str, description: str = "", attendees: str = "") -> str:
     # 获取主日历（从日历列表中找 type=primary）
-    cal_resp = api_request("GET", "/calendar/v4/calendars")
+    cal_resp = api_request("GET", "/calendar/v4/calendars", scopes=["calendar:calendar"])
     calendar_id = ""
     for cal in cal_resp.get("data", {}).get("calendar_list", []):
         if cal.get("type") == "primary":
@@ -34,7 +34,7 @@ def create_event(summary: str, start: str, end: str, description: str = "", atte
     if description:
         body["description"] = description
 
-    data = api_request("POST", f"/calendar/v4/calendars/{calendar_id}/events", body=body)
+    data = api_request("POST", f"/calendar/v4/calendars/{calendar_id}/events", body=body, scopes=["calendar:calendar"])
     event = data.get("data", {}).get("event", {})
     event_id = event.get("event_id", "")
 
@@ -44,7 +44,7 @@ def create_event(summary: str, start: str, end: str, description: str = "", atte
         try:
             api_request("POST", f"/calendar/v4/calendars/{calendar_id}/events/{event_id}/attendees", body={
                 "attendees": attendee_list,
-            })
+            }, scopes=["calendar:calendar"])
         except Exception:
             pass
 

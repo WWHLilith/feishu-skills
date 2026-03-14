@@ -17,7 +17,7 @@ def _parse_wiki_url(url: str) -> str:
 
 def read_wiki(token: str) -> str:
     # 解析 wiki token → docx token
-    node = api_request("GET", "/wiki/v2/spaces/get_node", params={"token": token})
+    node = api_request("GET", "/wiki/v2/spaces/get_node", params={"token": token}, scopes=["wiki:wiki"])
     node_data = node.get("data", {}).get("node", {})
     obj_token = node_data.get("obj_token", "")
     title = node_data.get("title", "N/A")
@@ -26,7 +26,7 @@ def read_wiki(token: str) -> str:
         return f"[error] 无法解析 wiki token: {token}"
 
     # 读取文档内容
-    content = api_request("GET", f"/docx/v1/documents/{obj_token}/raw_content")
+    content = api_request("GET", f"/docx/v1/documents/{obj_token}/raw_content", scopes=["docx:document"])
     raw = content.get("data", {}).get("content", "")
     return f"标题: {title}\n---\n{raw if raw else '(内容为空)'}"
 

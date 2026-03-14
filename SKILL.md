@@ -1,6 +1,6 @@
 ---
 name: feishu
-description: "当需要操作飞书（文档、消息、表格、日历、审批、知识库等）时使用。"
+description: "当需要操作飞书（文档、消息、表格、日历、知识库等）时使用。"
 alwaysApply: false
 ---
 
@@ -17,7 +17,6 @@ alwaysApply: false
 | 知识库 | `wiki/` | 搜索、阅读知识库页面 |
 | 多维表格 | `bitable/` | 多维表格记录增删改查 |
 | 日历 | `calendar/` | 创建/查询日程 |
-| 审批 | `approval/` | 创建/查询审批实例 |
 
 ## 快速部署
 
@@ -76,13 +75,12 @@ FEISHU_APP_SECRET=your_app_secret
 | 消息发送 | `im:message`、`im:message:send_as_bot` |
 | 通讯录 | `contact:user.base:readonly`、`contact:user.id:readonly` |
 | 日历 | `calendar:calendar`、`calendar:calendar:readonly` |
-| 审批 | `approval:approval`、`approval:instance` |
 
 ### OAuth 用户权限（user_access_token，在"安全设置"添加重定向 URL）
 
-搜索类 API 需要用户授权，OAuth 回调地址：`http://localhost:19897/callback`
+OAuth 回调地址：`http://localhost:19897/callback`
 
-OAuth 请求的 scope：`docs:doc drive:drive wiki:wiki docx:document`
+OAuth scope 按需自动请求：每个 tool 声明自己需要的 scope，首次使用时触发授权，已授权的 scope 自动累积复用。
 
 ### 故障排查
 

@@ -17,7 +17,7 @@ def _parse_bitable_url(url: str) -> str:
 
 
 def list_tables(app_token: str) -> str:
-    data = api_request("GET", f"/bitable/v1/apps/{app_token}/tables")
+    data = api_request("GET", f"/bitable/v1/apps/{app_token}/tables", scopes=["bitable:app"])
     tables = data.get("data", {}).get("items", [])
     if not tables:
         return "没有数据表。"
@@ -32,7 +32,7 @@ def query_records(app_token: str, table_id: str, filter_str: str = "", count: in
     if filter_str:
         params["filter"] = filter_str
 
-    data = api_request("GET", f"/bitable/v1/apps/{app_token}/tables/{table_id}/records", params=params)
+    data = api_request("GET", f"/bitable/v1/apps/{app_token}/tables/{table_id}/records", params=params, scopes=["bitable:app"])
     records = data.get("data", {}).get("items", [])
     if not records:
         return "未找到记录。"
