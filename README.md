@@ -26,7 +26,7 @@
 - **👤 通讯录 contacts** — 按姓名搜索用户，获取用户详情
 - **📋 多维表格 bitable** — 查询、新增、更新多维表格记录
 - **📅 日历 calendar** — 创建日程，查询日程列表
-- **🎨 画板 board** — 查看/创建/更新/删除节点，导入 PlantUML/Mermaid 图表
+- **🎨 画板 board** — 查看/创建/更新节点，导入 PlantUML 图表
 
 
 ## Quick Start

@@ -15,23 +15,26 @@ def update_nodes(whiteboard_id: str, nodes_json: str) -> str:
     if not isinstance(nodes, list):
         nodes = [nodes]
 
-    data = api_request("PATCH", f"/board/v1/whiteboards/{whiteboard_id}/nodes", body={
-        "nodes": nodes,
-    }, scopes=["board:whiteboard:node:update"])
+    results = []
+    for node in nodes:
+        node_id = node.get("id")
+        if not node_id:
+            results.append("跳过：缺少 id 字段")
+            continue
+        api_request("PUT", f"/board/v1/whiteboards/{whiteboard_id}/nodes/{node_id}",
+                     body=node, scopes=["board:whiteboard:node:update"])
+        results.append(f"id={node_id} 更新成功")
 
-    updated = data.get("data", {}).get("nodes", [])
-    lines = [f"更新成功，共 {len(updated)} 个节点\n"]
-    for i, node in enumerate(updated, 1):
-        nid = node.get("id", "")
-        ntype = node.get("type", "")
-        lines.append(f"{i}. id={nid} (type={ntype})")
+    lines = [f"更新完成，共处理 {len(nodes)} 个节点\n"]
+    for i, r in enumerate(results, 1):
+        lines.append(f"{i}. {r}")
     return "\n".join(lines)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="更新飞书画板节点")
     parser.add_argument("--whiteboard-id", required=True, help="画板唯一标识")
-    parser.add_argument("--nodes", required=True, help="要更新的节点 JSON 数组")
+    parser.add_argument("--nodes", required=True, help="要更新的节点 JSON 数组，每个节点必须包含 id 字段")
     args = parser.parse_args()
     try:
         print(update_nodes(args.whiteboard_id, args.nodes))

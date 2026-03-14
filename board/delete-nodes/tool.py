@@ -6,14 +6,31 @@ from pathlib import Path
 _FEISHU_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_FEISHU_ROOT))
 
-from scripts.api import api_request
+import requests
+from scripts.oauth import get_user_token
+from scripts.config import FEISHU_BASE_URL
 
 
 def delete_nodes(whiteboard_id: str, node_ids: list[str]) -> str:
-    data = api_request("DELETE", f"/board/v1/whiteboards/{whiteboard_id}/nodes", body={
-        "node_ids": node_ids,
-    }, scopes=["board:whiteboard:node:delete"])
-
+    token = get_user_token(["board:whiteboard:node:delete"])
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json; charset=utf-8",
+    }
+    # batch_delete 通过 query param 传 node_ids（逗号分隔）
+    ids_str = ",".join(node_ids)
+    resp = requests.delete(
+        f"{FEISHU_BASE_URL}/board/v1/whiteboards/{whiteboard_id}/nodes/batch_delete",
+        headers=headers, params={"node_ids": ids_str}, timeout=15,
+    )
+    try:
+        data = resp.json()
+    except (ValueError, requests.exceptions.JSONDecodeError):
+        if resp.ok:
+            return f"删除成功，共删除 {len(node_ids)} 个节点"
+        raise RuntimeError(f"[飞书API错误] HTTP {resp.status_code}: {resp.text[:200]}")
+    if data.get("code", 0) != 0:
+        raise RuntimeError(f"[飞书API错误] code={data['code']}, msg={data.get('msg', '')}")
     return f"删除成功，共删除 {len(node_ids)} 个节点"
 
 

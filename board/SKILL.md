@@ -1,6 +1,6 @@
 ---
 name: feishu-board
-description: "飞书画板操作：查看/创建/更新/删除节点、导入 PlantUML/Mermaid 图表。"
+description: "飞书画板操作：查看/创建/更新/删除节点、导入 PlantUML 图表。"
 ---
 
 # 飞书画板
@@ -14,8 +14,8 @@ description: "飞书画板操作：查看/创建/更新/删除节点、导入 Pl
 | 查看节点 | `list-nodes/` | 获取画板中的所有节点 |
 | 创建节点 | `create-nodes/` | 创建图形节点（矩形、连线、文字等） |
 | 更新节点 | `update-nodes/` | 更新节点的位置、文字、样式等 |
-| 删除节点 | `delete-nodes/` | 删除画板中的节点 |
-| 导入图表 | `plantuml/` | 将 PlantUML/Mermaid 代码导入画板 |
+| 删除节点 | `delete-nodes/` | 删除画板中的节点（实验性，API 可能不生效） |
+| 导入 PlantUML | `plantuml/` | 将 PlantUML 代码导入画板 |
 
 ## 关键概念
 

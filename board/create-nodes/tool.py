@@ -19,12 +19,10 @@ def create_nodes(whiteboard_id: str, nodes_json: str) -> str:
         "nodes": nodes,
     }, scopes=["board:whiteboard:node:create"])
 
-    created = data.get("data", {}).get("nodes", [])
-    lines = [f"创建成功，共 {len(created)} 个节点\n"]
-    for i, node in enumerate(created, 1):
-        nid = node.get("id", "")
-        ntype = node.get("type", "")
-        lines.append(f"{i}. id={nid} (type={ntype})")
+    created_ids = data.get("data", {}).get("ids", [])
+    lines = [f"创建成功，共 {len(created_ids)} 个节点\n"]
+    for i, nid in enumerate(created_ids, 1):
+        lines.append(f"{i}. id={nid}")
     return "\n".join(lines)
 
 
