@@ -15,7 +15,7 @@ python -X utf8 .claude/skills/feishu/board/list-nodes/tool.py --whiteboard-id "V
 
 ## 参数
 
-- `--whiteboard-id`（必填）：画板唯一标识
+- `--whiteboard-id`（必填）：画板唯一标识。获取方式：通过文档 block 列表接口，`block_type=43` 的 block 的 `token` 即为 `whiteboard_id`
 
 ## 返回格式
 
