@@ -118,10 +118,7 @@ FEISHU_APP_SECRET=your_app_secret
 | 通讯录查询 | `contact:user.base:readonly`、`contact:user.id:readonly` | — | tenant |
 | 通讯录搜索 | `contact:user:search` | `contact:user:search` | user |
 | 日历 | `calendar:calendar` | `calendar:calendar` | user |
-| 画板读取 | `board:whiteboard:node:read` | `board:whiteboard:node:read` | user |
-| 画板创建 | `board:whiteboard:node:create` | `board:whiteboard:node:create` | user |
-| 画板更新 | `board:whiteboard:node:update` | `board:whiteboard:node:update` | user |
-| 画板删除 | `board:whiteboard:node:delete` | `board:whiteboard:node:delete` | user |
+| 画板 | `board:whiteboard:node:{read,create,update,delete}` | 同左 | user |
 
 
 - **user**：通过 OAuth 以用户身份操作，scope 按需自动请求
