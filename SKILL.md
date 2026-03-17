@@ -1,18 +1,20 @@
 ---
 name: feishu
 description: "当需要操作飞书（文档、消息、表格、日历、知识库等）时使用。"
-alwaysApply: false
 ---
 
 # 飞书技能集
 
-## 发现子技能
+## 导航协议
 
-使用 Bash 工具运行 `grep "^description:" <本SKILL.md所在目录>/*/SKILL.md`，获取所有直接子技能的 description。
+本技能集是一棵递归树。在任意层级：
 
-根据用户需求匹配最相关的子技能，再读取其完整 SKILL.md 获取详细用法。
+1. 读取当前 SKILL.md，并运行 `grep "^description:" <当前目录>/*/SKILL.md` 发现子节点
+2. 无子节点 → 叶子，当前 SKILL.md 包含完整用法，直接使用
+3. 有子节点但当前 SKILL.md 已满足需求 → 直接使用
+4. 有子节点且需要更具体的操作 → 选择最相关的子节点继续导航
 
-如果子技能本身也包含更深层的子技能，同样先用 `grep "^description:" <该SKILL.md所在目录>/*/SKILL.md` 发现下一层，按需加载。
+分支节点不列举子节点内容，新增技能只需加目录 + SKILL.md，自动被发现。
 
 ## 通用规则
 
