@@ -22,3 +22,4 @@ _load_env()
 FEISHU_APP_ID = os.environ.get("FEISHU_APP_ID", "")
 FEISHU_APP_SECRET = os.environ.get("FEISHU_APP_SECRET", "")
 FEISHU_BASE_URL = "https://open.feishu.cn/open-apis"
+FEISHU_DOMAIN = os.environ.get("FEISHU_DOMAIN", "feishu.cn")

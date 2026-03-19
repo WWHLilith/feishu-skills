@@ -8,6 +8,7 @@ _FEISHU_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(_FEISHU_ROOT))
 
 from scripts.api import api_request
+from scripts.config import FEISHU_DOMAIN
 
 # URL 中的文档类型路径 → obj_type 映射
 _URL_TYPE_MAP = {
@@ -69,7 +70,7 @@ def move_to_wiki(doc_token: str, obj_type: str, parent_token: str) -> str:
         if node.get("obj_token") == doc_token:
             title = node.get("title", "")
             wiki_token = node.get("node_token", "")
-            return f"移动成功\n标题: {title}\n链接: https://lilithgames.feishu.cn/wiki/{wiki_token}"
+            return f"移动成功\n标题: {title}\n链接: https://{FEISHU_DOMAIN}/wiki/{wiki_token}"
 
     return "移动成功（未能获取新节点详情）"
 
