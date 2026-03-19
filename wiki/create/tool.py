@@ -28,7 +28,7 @@ def get_space_id(node_token: str) -> str:
 def create_wiki_page(parent_token: str, title: str) -> dict:
     space_id = get_space_id(parent_token)
     body = {
-        "obj_type": "doc",
+        "obj_type": "docx",
         "parent_node_token": parent_token,
         "node_type": "origin",
         "title": title,
