@@ -32,4 +32,4 @@ python -X utf8 .claude/skills/feishu/wiki/search/tool.py --browse "父节点toke
 
 ## 常用空间
 
-- P-Game: `7361047859690897412`
+使用 `--list-spaces` 查看可用的知识空间及其 ID。
