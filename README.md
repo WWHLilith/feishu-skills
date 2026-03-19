@@ -2,7 +2,7 @@
 
 > 在 AI Coding Agent 对话中用自然语言操作飞书，无需切换窗口，无需记忆 API。
 
-9 modules · 25 tools · OAuth 用户身份
+9 modules · 27 tools · OAuth 用户身份
 
 ## Why Skills, Not MCP?
 
@@ -21,9 +21,9 @@
 ## Features
 
 - **📄 云文档 docs** — 搜索、阅读、创建、更新云文档，导入 Markdown，列出文件夹内容
-- **📚 知识库 wiki** — 浏览知识空间目录树，阅读知识库页面
+- **📚 知识库 wiki** — 浏览知识空间目录树，阅读知识库页面，移动文档到知识库
 - **📊 电子表格 sheets** — 读取、写入表格数据，创建新表格
-- **💬 即时消息 messages** — 发送文本 / 富文本消息，Webhook 推送通知
+- **💬 即时消息 messages** — 发送文本 / 富文本消息，Webhook 推送通知，读取聊天记录
 - **👤 通讯录 contacts** — 按姓名搜索用户，获取用户详情
 - **📋 多维表格 bitable** — 创建表格应用（含自定义字段和批量数据）、查询、新增、更新记录
 - **📅 日历 calendar** — 创建日程，查询日程列表
@@ -102,6 +102,8 @@ FEISHU_APP_SECRET=your_app_secret
 "读一下这个文档 https://xxx.feishu.cn/docx/abc123"
 "创建一个飞书文档，标题叫《技术方案》"
 "给张三发一条飞书消息"
+"读一下我和张三的飞书聊天记录"
+"把这个文档移动到知识库 https://xxx.feishu.cn/wiki/xxx 下面"
 "查一下我今天有什么日程"
 ```
 
@@ -117,6 +119,7 @@ FEISHU_APP_SECRET=your_app_secret
 | 电子表格 | `sheets:spreadsheet` | `sheets:spreadsheet` | user |
 | 多维表格 | `bitable:app` | `bitable:app` | user |
 | 消息发送 | `im:message`、`im:message:send_as_bot` | — | tenant |
+| 消息读取 | `im:message`、`im:message:readonly` | `im:message`、`im:message:readonly` | user |
 | 通讯录查询 | `contact:user.base:readonly`、`contact:user.id:readonly` | — | tenant |
 | 通讯录搜索 | `contact:user:search` | `contact:user:search` | user |
 | 日历 | `calendar:calendar` | `calendar:calendar` | user |
@@ -135,9 +138,9 @@ feishu/
 ├── SKILL.md              # 根：递归导航协议 + 通用规则（Agent 自动加载）
 ├── scripts/              # 共享模块 (config / auth / oauth / api)
 ├── docs/                 # search / read / create / update / list / import-md
-├── wiki/                 # search / read
+├── wiki/                 # search / read / move
 ├── sheets/               # read / write / create
-├── messages/             # send / webhook
+├── messages/             # send / webhook / history
 ├── contacts/             # search & get
 ├── bitable/              # create-app / query / create / update
 ├── calendar/             # create-event / list-events
